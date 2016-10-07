@@ -1,0 +1,106 @@
+<?php
+session_start();
+include_once 'test.php';
+
+if(isset($_SESSION['user'])!="")
+{
+ header("Location: home.php");
+}
+if(isset($_POST['submit']))
+{
+ $login  = mysql_real_escape_string($_POST['login']);
+ $password = mysql_real_escape_string($_POST['password']);
+ $res=mysql_query("SELECT * FROM users WHERE user_id='$login'");
+ $row=mysql_fetch_array($res);
+ if($row['password']== $password)
+ {
+  $_SESSION['user'] = $row['user_id'];
+  header("Location: home.php");
+ }
+ else
+ {
+  ?>
+        <script>alert('wrong details');</script>
+        <?php
+ }
+ 
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Movie Recommendation System</title>
+        <meta name="description" content="Custom Login Form Styling with CSS3" />
+        <meta name="keywords" content="css3, login, form, custom, input, submit, button, html5, placeholder" />
+        <meta name="author" content="Codrops" />
+        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script src="js/modernizr.custom.63321.js"></script>
+		<!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+		<style>
+			@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
+			body {
+				background: #563c55 url(images/blurred.jpg) no-repeat center top;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				background-size: cover;
+			}
+			.container > header h1,
+			.container > header h2 {
+				color: #fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+			}
+		</style>
+    </head>
+    <body>
+        <div class="container">
+		
+			<!-- Codrops top bar -->
+            <div class="codrops-top">
+               <center> <p style="font-size:18px">ILS Z-639 <strong>Social Media Mining </strong> Term Project By Raghuveer, Suhas, Srikanth and Supreeth
+                </p> </center>
+              <!--  <span class="right">
+                    <p
+                        <strong>Raghuveer, Suhas, Srikanth and Supreeth</strong>
+                    </p>
+                </span> -->
+            </div><!--/ Codrops top bar -->
+			
+			<header>
+			
+				<h1><strong>Movie Recommendation System</strong></h1>
+                <h2>We'll tell you what you need to watch ;) </h2>
+				
+
+				<div class="support-note">
+					<span class="note-ie">Sorry, This is supported only by the modern browsers.</span>
+				</div>
+				
+			</header>
+			
+			<section class="main">
+				<form class="form-3" method="post">
+				    <p class="clearfix">
+				        <label for="login">Username</label>
+				        <input type="text" name="login" id="login" placeholder="Username">
+				    </p>
+				    <p class="clearfix">
+				        <label for="password">Password</label>
+				        <input type="password" name="password" id="password" placeholder="Password"> 
+				    </p>
+				 <!--   <p class="clearfix">
+				        <input type="checkbox" name="remember" id="remember">
+				        <label for="remember">Remember me</label>
+				    </p> -->
+				<center> <p class="clearfix">
+				        <input type="submit" name="submit" value="Sign in">
+				    </p>  </center>
+				</form>?
+			</section>
+			
+        </div>
+    </body>
+</html>
